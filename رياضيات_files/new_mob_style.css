@@ -1,0 +1,186 @@
+@media only screen and (max-width: 600px) {
+    header {
+        height: auto !important;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .SHI_logo {
+        order: 3 !important;
+        width: 341px !important;
+        height: 62px !important;
+    }
+    .HR_logo {
+        order: 2 !important;
+        width: 125px !important;
+        height: 60px !important;
+        position: fixed;
+        bottom: 79px;
+        transform: translateX(-50%);
+    }
+    .Vision2030_logo {
+        width: 70px !important;
+        height: 40px !important;
+        position: fixed;
+        bottom: 90px;
+        right: 10px;
+        transform: translateX(-50%);
+    }
+    .circal-dots {
+        bottom: 0 !important;
+        top: 477.1px !important;
+        right: -178px !important;
+        width: 249px !important;
+        height: 212.04px !important;
+    }
+    .dots {
+        width: 52.99px !important;
+        height: 121.06px !important;
+        left: -16.99px !important;
+        bottom: 38.4px !important;
+    }
+    .title {
+        font-size: 28px !important;
+        font-weight: bold !important;
+        margin-top: 47px !important;
+    }
+    .search-bar label {
+        /* margin-top: 18px !important;
+        margin-bottom: 45px !important;*/
+        font-size: 15px !important;
+    }
+    .search-bar input {
+        width: 284px !important;
+        height: 50px !important;
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+        padding-right: 13px !important;
+    }
+    .search-bar button {
+        width: 88px !important;
+        height: 50px !important;
+        border-radius: 20px !important;
+        margin-right: 10px !important;
+        font-size: 15px !important;
+        font-weight: bold !important;
+    }
+    .search-result {
+        gap: 17px !important;
+        width: 381px !important;
+        margin-top: 33px !important;
+    }
+    .search-result .word {
+        height: 33px !important;
+        font-size: 8px !important;
+    }
+    .videos {
+        width: 382px !important;
+        height: 228px !important;
+        margin-top: 10px !important;
+        margin-bottom: 150px !important;
+    }
+    .VideosSectionBg {
+        background-color: transparent !important;
+    }
+    .youtub-logo i {
+        width: 36px !important;
+        height: 26px !important;
+        font-size: 25px !important;
+    }
+    .form .form-group label {
+        font-size: 15px !important;
+        padding-right: 20px;
+    }
+    .form .form-group input {
+        width: 284px !important;
+        height: 50px !important;
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+        padding-right: 13px !important;
+    }
+    .form .form-group .form-check input {
+        width: 25px !important;
+        height: 20px !important;
+    }
+    .form form input[type="submit"] {
+        width: 88px !important;
+        height: 50px !important;
+        border-radius: 20px !important;
+        margin-right: 10px !important;
+        font-size: 15px !important;
+        font-weight: bold !important;
+        padding: 0 !important;
+    }
+    #login-btn {
+        bottom: 20px !important;
+        left: 20px !important;
+        font-size: 30px !important;
+        padding: 26px !important;
+        width: 50px !important;
+        height: 50px !important;
+    }
+    #dashborad-btn {
+        bottom: 20px !important;
+        left: 20px !important;
+        font-size: 30px !important;
+        padding: 26px !important;
+        width: 50px !important;
+        height: 50px !important;
+    }
+    #login-modal {
+        width: -webkit-fill-available !important;
+        transform: translate(-5%, -50%) !important;
+        height: fit-content !important;
+    }
+    .search-bar form {
+        display: flex;
+        gap: 10px;
+        flex-direction: column !important;
+    }
+    .search-bar .search-box {
+        flex-direction: column !important;
+    }
+    .search-bar .search-box label {
+        align-self: flex-start;
+    }
+    .search-result .card {
+        width: auto !important;
+    }
+    .message {
+        width: 80% !important;
+    }
+    .bg-mob {
+        position: fixed;
+        bottom: 0;
+        height: 140px;
+        background: #f7f7f7;
+        width: 100%;
+    }
+    footer {
+        : none !important;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        background-color: #f7f7f7 !important;
+        font-size: 13px !important;
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+    }
+    footer a {
+        font-size: 14px !important;
+    }
+    .bxl-logos {
+        font-size: 14px !important;
+        width: fit-content !important;
+        height: fit-content !important;
+    }
+    .appLinks {
+        margin-bottom: 60px !important;
+        margin-top: -129px !important;
+        height: 150px !important;
+        display: block !important;
+    }
+    .appLinks img {
+        width: 80px !important;
+    }
+}

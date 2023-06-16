@@ -1,0 +1,219 @@
+const baseUrl = "https://api.esharat.shi.org.sa/api";
+
+
+const loginBtn = document.querySelector("#login-btn");
+const dashboradBtn = document.querySelector("#dashborad-btn");
+const loginModal = document.querySelector("#login-modal");
+const btnSearch = document.querySelector(".btn-search");
+
+loginBtn.addEventListener("click", function() {
+    loginModal.showModal();
+    loginModal.style.position = "fixed";
+    loginModal.style.display = "flex";
+});
+loginModal.addEventListener('close', function() {
+    loginModal.style.position = "relative";
+    loginModal.style.display = "none";
+});
+dashboradBtn.addEventListener("click", function() {
+    window.location.href = "listwords.html";
+});
+document.querySelector('#search').addEventListener("keyup", async function(event) {
+    if (event.keyCode === 13) {
+        if (btnSearch.disabled === false) {
+            await search();
+        }
+    }
+});
+
+
+function IsAuthenticated() {
+
+    let token = window.localStorage.getItem('esharatAuth');
+
+    if (token === '') {
+        // loginBtn.style.display = 'flex';
+        dashboradBtn.style.display = 'none';
+    } else {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+
+        var response = fetch(baseUrl + "/auth/IsAuthenticated/" + token, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+
+                if (result.isAuthenticated === true) {
+                    loginBtn.style.display = 'none';
+                    dashboradBtn.style.display = 'flex';
+                } else {
+                    // loginBtn.style.display = 'flex';
+                    dashboradBtn.style.display = 'none';
+                    window.localStorage.removeItem('esharatAuth');
+                    window.localStorage.removeItem('Access');
+                }
+            })
+            .catch(error => console.log('error', error));
+        // if (response.status === 200) {
+        //     response.json().then(function(resu) {
+        //         if (resu.IsAuthenticated === true) {
+        //             loginBtn.style.display = 'none';
+        //             dashboradBtn.style.display = 'flex';
+        //         } else {
+        //             loginBtn.style.display = 'flex';
+        //             dashboradBtn.style.display = 'none';
+        //             window.localStorage.removeItem('esharatAuth');
+        //         }
+        //     });
+        // } else {}
+
+    }
+}
+async function search() {
+    btnSearch.disabled = true;
+    const sResult = document.querySelector('.search-result');
+    sResult.textContent = '';
+
+    const word = document.querySelector('#search');
+
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    await fetch(baseUrl + "/words?word=" + word.value, requestOptions)
+        .then(async response => await response.json())
+        .then(result => {
+            btnSearch.disabled = false;
+            displayResult(result)
+        })
+        .catch(error => console.log());
+}
+
+function displayResult(res) {
+    const result = document.querySelector('.search-result');
+
+    if (res != null) {
+        res.forEach(element => {
+            let wordForm = document.createElement('div');
+            wordForm.classList.add('word-form');
+
+            let word = document.createElement('button');
+            word.classList.add('word');
+            word.value = element.file;
+            word.textContent = element.word;
+            word.addEventListener('click', function() {
+
+                const videoSection = document.querySelector(".videos");
+                const y = wordForm.getBoundingClientRect().top + window.scrollY;
+                window.scroll({
+                    top: videoSection.offsetTop,
+                    behavior: 'smooth'
+                });
+                while (videoSection.children.length > 1) {
+                    videoSection.removeChild(videoSection.lastChild);
+                }
+
+                let extension = this.value.split(".").pop();
+                if (extension === "gif") {
+                    let videoContent = document.createElement('img');
+                    videoContent.src = "https://api.esharat.shi.org.sa/files/" + this.value;
+                    videoContent.style.width = '100%';
+                    videoContent.style.height = '100%';
+                    videoContent.style.borderRadius = '20px';
+                    videoContent.loading = 'lazy';
+
+                    videoSection.appendChild(videoContent);
+
+                    const youtubLogo = document.querySelector('.youtub-logo');
+                    youtubLogo.style.display = "none";
+
+                } else {
+                    let videoContent = document.createElement('video');
+
+                    videoContent.src = "https://api.esharat.shi.org.sa/files/" + this.value;
+                    videoContent.style.width = '-webkit-fill-available';
+                    videoContent.style.height = '-webkit-fill-available';
+                    videoContent.style.borderRadius = '20px';
+                    videoContent.controls = false;
+                    videoContent.loop = true;
+                    videoContent.play();
+
+                    videoSection.appendChild(videoContent);
+                    const youtubLogo = document.querySelector('.youtub-logo');
+                    youtubLogo.style.display = "none";
+                    videoSection.classList.add("VideosSectionBg");
+                }
+            });
+
+            wordForm.appendChild(word);
+            result.appendChild(wordForm);
+
+        });
+        const element = result.children[0].children[0];
+        element.focus();
+        element.click();
+    }
+    btnSearch.disabled = false;
+}
+
+async function login() {
+    try {
+        const username = document.querySelector('#username');
+        const password = document.querySelector('#password');
+
+        var formdata = new FormData();
+        formdata.append("username", username.value);
+        formdata.append("password", password.value);
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        var response = await fetch(baseUrl + "/auth/login", requestOptions);
+
+        if (response.status === 200) {
+            response.json().then(function(resu) {
+
+                window.localStorage.setItem('esharatAuth', resu.token);
+                window.localStorage.setItem('Access', true);
+                loginBtn.style.display = 'none';
+                dashboradBtn.style.display = 'flex';
+            });
+        }
+    } catch (error) {
+
+    }
+}
+
+function load() {
+
+    // search for new word for test api
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+    fetch(baseUrl + "/words?word=احمر", requestOptions)
+        .then(async response => await response.json())
+        .then(result => result)
+        .catch(error => console.log(error));
+
+
+    IsAuthenticated();
+
+    var segment = window.location.href.split('/').pop();
+
+    if (segment === '?admin') {
+        loginModal.showModal();
+        loginModal.style.position = "fixed";
+        loginModal.style.display = "flex";
+    }
+
+
+}
+
+
+document.onload = load();
